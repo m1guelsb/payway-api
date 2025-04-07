@@ -3,6 +3,7 @@ package domain
 import (
 	"crypto/rand"
 	"encoding/hex"
+	"sync"
 	"time"
 
 	"github.com/google/uuid"
@@ -14,6 +15,7 @@ type Account struct {
 	Email     string
 	ApiKey    string
 	Balance   float64
+	mu        sync.RWMutex // Mutex to protect concurrent access to the account balance
 	CreatedAt time.Time
 	UpdatedAt time.Time
 }
@@ -36,4 +38,11 @@ func NewAccount(name, email string) *Account {
 	}
 
 	return account
+}
+
+func (a *Account) AddBalance(amount float64) {
+	a.mu.Lock()
+	defer a.mu.Unlock()
+	a.Balance += amount
+	a.UpdatedAt = time.Now()
 }
