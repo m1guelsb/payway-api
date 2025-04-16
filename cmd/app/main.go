@@ -7,6 +7,7 @@ import (
 	"os"
 
 	"github.com/joho/godotenv"
+	_ "github.com/lib/pq"
 	"github.com/m1guelsb/payway-api/internal/repository"
 	"github.com/m1guelsb/payway-api/internal/service"
 	"github.com/m1guelsb/payway-api/internal/web/server"
