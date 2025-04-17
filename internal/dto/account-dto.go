@@ -22,10 +22,7 @@ type AccountOutput struct {
 }
 
 func ToAccount(input CreateAccountInput) *domain.Account {
-	return &domain.Account{
-		Name:  input.Name,
-		Email: input.Email,
-	}
+	return domain.NewAccount(input.Name, input.Email)
 }
 
 func FromAccount(account *domain.Account) AccountOutput {
