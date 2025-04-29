@@ -36,7 +36,7 @@ type InvoiceOutput struct {
 	UpdatedAt      time.Time `json:"updated_at"`
 }
 
-func ToInvoice(input *CreateInvoiceInput, accountID string) (*domain.Invoice, error) {
+func ToInvoice(input CreateInvoiceInput, accountID string) (*domain.Invoice, error) {
 	card := domain.CreditCard{
 		Number:         input.CardNumber,
 		CVV:            input.CVV,
