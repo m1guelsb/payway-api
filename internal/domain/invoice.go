@@ -19,7 +19,7 @@ type Invoice struct {
 	ID             string
 	AccountID      string
 	Amount         float64
-	Status         string
+	Status         Status
 	Description    string
 	PaymentType    string
 	CardLastDigits string
@@ -46,7 +46,7 @@ func NewInvoice(accountID string, amount float64, description string, paymentTyp
 		ID:             uuid.New().String(),
 		AccountID:      accountID,
 		Amount:         amount,
-		Status:         string(StatusPending),
+		Status:         StatusPending,
 		Description:    description,
 		PaymentType:    paymentType,
 		CardLastDigits: lastFourDigits,
@@ -69,16 +69,16 @@ func (i *Invoice) Process() error {
 		newStatus = StatusRejected
 	}
 
-	i.Status = string(newStatus)
+	i.Status = newStatus
 	return nil
 }
 
 func (i *Invoice) UpdateStatus(newStatus Status) error {
-	if i.Status != string(StatusPending) {
+	if i.Status != StatusPending {
 		return ErrInvalidStatus
 	}
 
-	i.Status = string(newStatus)
+	i.Status = newStatus
 	i.UpdatedAt = time.Now()
 	return nil
 }
