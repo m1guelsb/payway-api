@@ -9,9 +9,47 @@ Content-Type: application/json
 
 {
   "name": "mingel",
-  "email": "mi@email.com"
+  "email": "min@email.com"
 }
 
 ###
 GET {{baseUrl}}/accounts
 X-API-Key: {{apiKey}}
+
+### new invoice
+# @name createInvoice
+POST {{baseUrl}}/invoice
+Content-Type: application/json
+X-API-Key: {{apiKey}}
+
+{
+    "amount": 100.50,
+    "description": "invoice test",
+    "payment_type": "credit_card",
+    "card_number": "4111111111111111",
+    "cvv": "123",
+    "expiry_month": 12,
+    "expiry_year": 2025,
+    "cardholder_name": "John Doe"
+}
+
+### get a invoice
+@invoiceId = {{createInvoice.response.body.id}}
+GET {{baseUrl}}/invoice/{{invoiceId}}
+X-API-Key: {{apiKey}}
+
+### try to create high value invoice (> 10000)
+POST {{baseUrl}}/invoice
+Content-Type: application/json
+X-API-Key: {{apiKey}}
+
+{
+    "amount": 15000,
+    "description": "high value invoice test",
+    "payment_type": "credit_card",
+    "card_number": "4111111111111111",
+    "cvv": "123",
+    "expiry_month": 12,
+    "expiry_year": 2025,
+    "cardholder_name": "John Doe"
+} 
